@@ -1,0 +1,196 @@
+import 'package:flutter/material.dart';
+
+class screen1 extends StatelessWidget {
+  const screen1({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text("Screen1"),
+        backgroundColor: const Color.fromARGB(31, 255, 250, 250),
+      ),
+      body: Center(
+        child: Container(
+          child: ElevatedButton(
+            child: const Text("Get started"),
+            onPressed: () {
+              Navigator.push(context, MaterialPageRoute(builder: (context) {
+                return screen1();
+              }));
+            },
+          ),
+        ),
+      ),
+    );
+  }
+}
+// ignore_for_file: prefer_const_constructors, avoid_init_to_null
+
+import 'package:flutter/material.dart';
+import 'package:phone_call_app/assessment/trainning_completion.dart';
+
+class UserLogin extends StatefulWidget {
+  const UserLogin({Key? key}) : super(key: key);
+
+  @override
+  State<UserLogin> createState() => _UserLoginState();
+}
+
+class _UserLoginState extends State<UserLogin> {
+  TextEditingController nameController = TextEditingController();
+  TextEditingController emailController = TextEditingController();
+  var nameError = null;
+  var emailError = null;
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: Text("User Login")),
+      body: Padding(
+        padding: const EdgeInsets.all(40),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          // ignore: prefer_const_literals_to_create_immutables
+          children: [
+            Text(
+              "Login",
+              style: TextStyle(fontSize: 40, fontWeight: FontWeight.bold),
+            ),
+            SizedBox(
+              height: 20,
+            ),
+            TextField(
+              controller: nameController,
+              decoration: InputDecoration(
+                  errorText: nameError,
+                  labelText: "Student Name",
+                  icon: Icon(Icons.person),
+                  hintText: "Enter your name"),
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            TextField(
+              controller: emailController,
+              decoration: InputDecoration(
+                  errorText: emailError,
+                  hintText: "Enter your email",
+                  labelText: "Email ID",
+                  icon: Icon(Icons.alternate_email_sharp)),
+            ),
+            SizedBox(
+              height: 50,
+            ),
+            Center(
+                child: SizedBox(
+                    width: 240,
+                    height: 40,
+                    child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10))),
+                        onPressed: () {
+                          setState(() {
+                            if (nameController.text.isEmpty) {
+                              nameError =
+                                  "Field should not be blank in Name field";
+                            } else if (emailController.text.isEmpty) {
+                              emailError =
+                                  "Field should not be blank in Email field";
+                            } else {
+                              nameError = null;
+                              emailError = null;
+                              Navigator.push(context,
+                                  MaterialPageRoute(builder: (context) {
+                                return TrainingCompletion(
+                                    Name: nameController.text.toString());
+                              }));
+                            }
+                          });
+                        },
+                        child: Text("Login"))))
+          ],
+        ),
+      ),
+    );
+  }
+}
+// ignore_for_file: prefer_const_constructors, non_constant_identifier_names, must_be_immutable, avoid_unnecessary_containers
+
+import 'package:flutter/material.dart';
+
+class TrainingCompletion extends StatelessWidget {
+  String? Name;
+  DateTime todayDate = DateTime.now();
+  TrainingCompletion({Key? key, this.Name}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: SafeArea(
+          child: Padding(
+        padding: const EdgeInsets.all(20),
+        child: ListView(
+          children: [
+            Text(
+              "Status Bar",
+              style: TextStyle(
+                  fontSize: 15,
+                  color: Colors.black38,
+                  fontWeight: FontWeight.bold),
+            ),
+            Divider(
+              height: 20,
+            ),
+            SizedBox(
+              height: 15,
+            ),
+            Text("Hi, ${Name}",
+                style: TextStyle(
+                    fontSize: 40,
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold)),
+            SizedBox(
+              height: 40,
+            ),
+            Container(
+              child: Image(
+                  image: NetworkImage(
+                      "https://i.pinimg.com/originals/e5/73/7c/e5737c44dd061635766ba1e3a4b4efb9.png")),
+            ),
+            SizedBox(
+              height: 20,
+            ),
+            Text(
+              "You have successfully completed Hybrid Mobile App Development Course.",
+              style: TextStyle(fontSize: 25),
+            ),
+            SizedBox(
+              height: 40,
+            ),
+            Text(
+              "INSTRUCTOR NAME",
+              style: TextStyle(fontSize: 30),
+            ),
+            SizedBox(
+              height: 5,
+            ),
+            Text("Pankaj Kapoor",
+                style: TextStyle(color: Colors.black54, fontSize: 20)),
+            SizedBox(
+              height: 40,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                Text(
+                    "Date:${todayDate.day}-${todayDate.month}-${todayDate.year}",
+                    style: TextStyle(fontSize: 20))
+              ],
+            )
+          ],
+        ),
+      )),
+    );
+  }
+}
